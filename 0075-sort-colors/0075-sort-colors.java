@@ -1,38 +1,43 @@
 class Solution {
-    public void merge(int arr[], int low, int mid, int high) {
-        int p1 = low;
-        int p2 = mid + 1;
-        int k = 0;
-        int temp[] = new int[high - low + 1];
-        while (p1 <= mid && p2 <= high) {
-            if (arr[p1] < arr[p2]) {
-                temp[k++] = arr[p1++];
-            } 
-            else {
-                temp[k++] = arr[p2++];
-            }
+     public static void heapSort(int[] arr, int n) {
+      
+        for (int i = n / 2 - 1; i >= 0; i--) {
+            heapify(arr, n, i);
         }
-        while (p1 <= mid) {
-            temp[k++] = arr[p1++];
-        }
-        while (p2 <= high) {
-            temp[k++] = arr[p2++];
-        }
-        for (int i = low; i <= high; i++) {
-            arr[i] = temp[i - low];
+
+        for (int i = n - 1; i > 0; i--) {
+            int temp = arr[0];
+            arr[0] = arr[i];
+            arr[i] = temp;
+
+            // Heapify the reduced heap
+            heapify(arr, i, 0);
         }
     }
 
-    public void mergeSort(int arr[], int low, int high) {
-        if (low < high) {
-            int mid = (low + high) / 2;
-            mergeSort(arr, low, mid);
-            mergeSort(arr, mid + 1, high);
-            merge(arr, low, mid, high);
+    public static void heapify(int[] arr, int n, int i) {
+        int largest = i; 
+        int leftChild = 2 * i + 1;
+        int rightChild = 2 * i + 2;
+
+        if (leftChild < n && arr[leftChild] > arr[largest]) {
+            largest = leftChild;
+        }
+
+        if (rightChild < n && arr[rightChild] > arr[largest]) {
+            largest = rightChild;
+        }
+
+        if (largest != i) {
+            int temp = arr[i];
+            arr[i] = arr[largest];
+            arr[largest] = temp;
+
+            heapify(arr, n, largest);
         }
     }
     public void sortColors(int[] arr) {
         int n = arr.length;
-        mergeSort(arr, 0, n - 1);
+        heapSort(arr, n);
     }
 }
