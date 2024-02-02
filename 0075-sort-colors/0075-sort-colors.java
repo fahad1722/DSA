@@ -1,6 +1,5 @@
 class Solution {
-     public static void heapSort(int[] arr, int n) {
-      
+    public static void heapSort(int[] arr, int n) {
         for (int i = n / 2 - 1; i >= 0; i--) {
             heapify(arr, n, i);
         }
@@ -10,22 +9,21 @@ class Solution {
             arr[0] = arr[i];
             arr[i] = temp;
 
-            // Heapify the reduced heap
             heapify(arr, i, 0);
         }
     }
 
     public static void heapify(int[] arr, int n, int i) {
-        int largest = i; 
-        int leftChild = 2 * i + 1;
-        int rightChild = 2 * i + 2;
+        int largest = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
 
-        if (leftChild < n && arr[leftChild] > arr[largest]) {
-            largest = leftChild;
+        if (left < n && arr[left] > arr[largest]) {
+            largest = left;
         }
 
-        if (rightChild < n && arr[rightChild] > arr[largest]) {
-            largest = rightChild;
+        if (right < n && arr[right] > arr[largest]) {
+            largest = right;
         }
 
         if (largest != i) {
@@ -36,6 +34,7 @@ class Solution {
             heapify(arr, n, largest);
         }
     }
+
     public void sortColors(int[] arr) {
         int n = arr.length;
         heapSort(arr, n);
