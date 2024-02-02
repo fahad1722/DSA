@@ -1,21 +1,17 @@
 class Solution {
     public void sortColors(int[] arr) {
         int n = arr.length;
-        boolean swapped = false;
         for (int i = 0; i < n - 1; i++) {
-            swapped = false;
-            for (int j = 0; j < n - i - 1; j++) {
-                if (arr[j] > arr[j + 1]) {
-                    int temp = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = temp;
-                    swapped = true;
-                }
-            }
-            // If no two elements were swapped in the inner loop, the array is already sorted
-            if (!swapped) {
-                break;
-            }
-        }
+			int minIndex = i;
+			for (int j = i + 1; j < n; j++) {
+				if(arr[j] < arr[minIndex]) {
+					minIndex = j;
+				}
+			}
+			// Swap the minimum element with the first element of the unsorted sub-array
+			int temp = arr[minIndex];
+			arr[minIndex] = arr[i];
+			arr[i] = temp;
+		}
     }
 }
