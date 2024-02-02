@@ -1,32 +1,38 @@
 class Solution {
-    public void swap(int arr[], int i, int j) {
-        int temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-    }
-
-    public void quickSort(int arr[], int low, int high) {
-        if (low < high) {
-            int pivot = partition(arr, low, high);
-            quickSort(arr, low, pivot - 1);
-            quickSort(arr, pivot + 1, high);
-        }
-    }
-
-    public int partition(int arr[], int low, int high) {
-        int pivot = arr[high];
-        int i = low - 1;
-        for (int j = low; j < high; j++) {
-            if (arr[j] < pivot) {
-                i++;
-                swap(arr, i, j);
+    public void merge(int arr[], int low, int mid, int high) {
+        int p1 = low;
+        int p2 = mid + 1;
+        int k = 0;
+        int temp[] = new int[high - low + 1];
+        while (p1 <= mid && p2 <= high) {
+            if (arr[p1] < arr[p2]) {
+                temp[k++] = arr[p1++];
+            } 
+            else {
+                temp[k++] = arr[p2++];
             }
         }
-        swap(arr, i + 1, high);
-        return i + 1;
+        while (p1 <= mid) {
+            temp[k++] = arr[p1++];
+        }
+        while (p2 <= high) {
+            temp[k++] = arr[p2++];
+        }
+        for (int i = low; i <= high; i++) {
+            arr[i] = temp[i - low];
+        }
+    }
+
+    public void mergeSort(int arr[], int low, int high) {
+        if (low < high) {
+            int mid = (low + high) / 2;
+            mergeSort(arr, low, mid);
+            mergeSort(arr, mid + 1, high);
+            merge(arr, low, mid, high);
+        }
     }
     public void sortColors(int[] arr) {
         int n = arr.length;
-        quickSort(arr, 0, n - 1);
+        mergeSort(arr, 0, n - 1);
     }
 }
